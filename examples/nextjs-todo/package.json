@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@arkejs/client": "^2.1.0",
+    "@arkejs/form": "^1.2.2",
     "@arkejs/ui": "^0.24.2",
     "@types/node": "20.2.5",
     "@types/react": "18.2.8",
