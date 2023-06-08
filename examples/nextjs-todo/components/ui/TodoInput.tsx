@@ -11,7 +11,7 @@ export interface CrudState {
   delete?: boolean | ID;
 }
 
-export default function TodoInput({ onSetModal }: any) {
+export default function TodoInput({ onSetModal, onRefreshPage }: any) {
   const [fields, setFields] = useState<TBaseParameter[]>();
 
   const client = useClient();
@@ -22,18 +22,21 @@ export default function TodoInput({ onSetModal }: any) {
       .then((res) => setFields(res.data.content.parameters));
   }, []);
 
-  const handleSubmit = async (data: TUnit) =>
+  const handleCreate = async (data: TUnit) => {
     client.unit
       .create("todo", data)
-      .then((res) => console.log("ok"))
+      .then((res) => onRefreshPage())
       .catch((e) => console.log("something went wrong"));
 
+    onSetModal(false);
+  };
+
   return (
-    <div className="absolute top-0 h-screen w-screen bg-gray-300 opacity-90 flex justify-center items-center z-40">
+    <div className="absolute top-0 h-screen w-screen bg-gray-300 opacity-90 flex justify-center items-center z-50">
       {fields && (
         <Form
           fields={fields}
-          onSubmit={(values) => handleSubmit(values)}
+          onSubmit={(values) => handleCreate(values)}
           onChange={(values) => {
             console.log(values);
           }}

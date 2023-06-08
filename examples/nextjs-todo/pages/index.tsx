@@ -1,6 +1,7 @@
 import { withAuth } from "@/server/withAuth";
 import { getClient } from "@/arke/getClient";
 import { GetServerSideProps } from "next";
+import { useRouter } from "next/router";
 import { Input, Button } from "@arkejs/ui";
 import { useState } from "react";
 
@@ -10,6 +11,9 @@ import { Client, TUnit } from "@arkejs/client";
 
 export default function Home({ todos }: { todos: TUnit[] }) {
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const router = useRouter();
+
+  const refreshData = () => router.replace(router.asPath);
 
   return (
     <>
@@ -24,10 +28,12 @@ export default function Home({ todos }: { todos: TUnit[] }) {
           </Button>
         </header>
         <main className="py-8">
-          <AllTodo todos={todos} />
+          <AllTodo todos={todos} onRefreshPage={refreshData}/>
         </main>
       </div>
-      {isModalVisible && <TodoInput onSetModal={setIsModalVisible} />}
+      {isModalVisible && (
+        <TodoInput onSetModal={setIsModalVisible} onRefreshPage={refreshData} />
+      )}
     </>
   );
 }
@@ -55,3 +61,4 @@ export const getServerSideProps: GetServerSideProps = withAuth(
     }
   }
 );
+
