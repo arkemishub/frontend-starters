@@ -10,7 +10,7 @@ import TodoInput from "../components/ui/TodoInput";
 import { Client, TUnit } from "@arkejs/client";
 
 export default function Home({ todos }: { todos: TUnit[] }) {
-  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [modal, setModal] = useState({ isOpen: false, id: null });
   const router = useRouter();
 
   const refreshData = () => router.replace(router.asPath);
@@ -22,17 +22,26 @@ export default function Home({ todos }: { todos: TUnit[] }) {
           <h1 className="text-2xl font-semibold">ARKE todo</h1>
           <Button
             className="btn--secondary"
-            onClick={() => setIsModalVisible(true)}
+            onClick={() => setModal({ ...modal, isOpen: true })}
           >
             Add todo
           </Button>
         </header>
         <main className="py-8">
-          <AllTodo todos={todos} onRefreshPage={refreshData}/>
+          <AllTodo
+            todos={todos}
+            onRefreshPage={refreshData}
+            onSetModal={setModal}
+            onModal={modal}
+          />
         </main>
       </div>
-      {isModalVisible && (
-        <TodoInput onSetModal={setIsModalVisible} onRefreshPage={refreshData} />
+      {modal.isOpen && (
+        <TodoInput
+          onSetModal={setModal}
+          onModal={modal}
+          onRefreshPage={refreshData}
+        />
       )}
     </>
   );
@@ -61,4 +70,3 @@ export const getServerSideProps: GetServerSideProps = withAuth(
     }
   }
 );
-

@@ -4,9 +4,13 @@ import Todo from "./Todo";
 export default function AllTodo({
   todos,
   onRefreshPage,
+  onSetModal,
+  onModal,
 }: {
   todos: TUnit[];
   onRefreshPage: () => {};
+  onSetModal: () => {};
+  onModal: {};
 }) {
   return (
     <ul className="flex space-x-4 overflow-y-auto">
@@ -17,6 +21,8 @@ export default function AllTodo({
             description={item.description}
             id={item.id}
             onRefreshPage={onRefreshPage}
+            onSetModal={onSetModal}
+            onModal={onModal}
           />
         </li>
       ))}

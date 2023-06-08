@@ -11,8 +11,9 @@ export interface CrudState {
   delete?: boolean | ID;
 }
 
-export default function TodoInput({ onSetModal, onRefreshPage }: any) {
+export default function TodoInput({ onSetModal, onModal, onRefreshPage }: any) {
   const [fields, setFields] = useState<TBaseParameter[]>();
+  const [editObj, setEditObj] = useState<TUnit>();
 
   const client = useClient();
 
@@ -20,6 +21,12 @@ export default function TodoInput({ onSetModal, onRefreshPage }: any) {
     client.arke
       .struct("todo")
       .then((res) => setFields(res.data.content.parameters));
+
+    if (onModal.id) {
+      client.unit
+        .get("todo", onModal.id)
+        .then((res) => setEditObj(res.data.content));
+    }
   }, []);
 
   const handleCreate = async (data: TUnit) => {
@@ -69,7 +76,9 @@ export default function TodoInput({ onSetModal, onRefreshPage }: any) {
                 )}
               />
               <div className="flex space-x-2">
-                <Button className="btn--primary">Add Todo</Button>
+                <Button className="btn--primary">
+                  {onModal.id ? "Edit Todo" : "Add Todo"}
+                </Button>
                 <Button
                   onClick={(e) => {
                     e.preventDefault();

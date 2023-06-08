@@ -2,7 +2,14 @@ import { TUnit } from "@arkejs/client";
 import { Button } from "@arkejs/ui";
 import useClient from "@/arke/useClient";
 
-export default function Todo({ title, description, id, onRefreshPage }) {
+export default function Todo({
+  title,
+  description,
+  id,
+  onRefreshPage,
+  onSetModal,
+  onModal,
+}) {
   const client = useClient();
 
   const handleDelete = async (itemId: string) => {
@@ -13,11 +20,30 @@ export default function Todo({ title, description, id, onRefreshPage }) {
   };
 
   return (
-    <div className="relative p-4 border border-black w-60 min-h-[250px]">
+    <div className="relative p-4 border border-black border-b-4 border-l-4 rounded-bl-xl rounded-br-lg rounded-tr-md rounded-tl-lg w-60 min-h-[250px]">
       <h1 className="text-2xl font-bold">{title}</h1>
       <p className="font-light mt-2">{description}</p>
-      <div className="absolute bottom-2 right-0">
-        <Button onClick={() => handleDelete(id)}>
+      <div className="absolute flex bottom-2 right-0">
+        <Button
+          onClick={() => onSetModal({ isOpen: true, id: id })}
+          className="p-2"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="w-6 h-6"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125"
+            />
+          </svg>
+        </Button>
+        <Button onClick={() => handleDelete(id)} className="p-2">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
