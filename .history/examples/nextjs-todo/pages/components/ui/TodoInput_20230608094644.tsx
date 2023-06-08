@@ -65,3 +65,42 @@ export default function TodoInput({ setModal }: any) {
     </div>
   );
 }
+
+// <Form fields={fields} onSubmit={handleSubmit}>
+// {() => (
+//   <div className="space-y-8">
+//     <FormField
+//       id="title"
+//       render={(props) => (
+//         <Input
+//           {...props}
+//           label='Title'
+//           className="w-full"
+//           onChange={(e) => setData({...data, title: e.target.value})}
+//           required
+//         />
+//       )}
+//     />
+//     <FormField
+//       id="description"
+//       render={(props) => (
+//         <Input
+//           {...props}
+//           label='Description'
+//           className="w-full"
+//           onChange={(e) => setData({...data, description: e.target.value})}
+//         />
+//       )}
+//     />
+
+//     <div className="flex space-x-2">
+//     <Button className="btn--primary" type="submit" onClick={()=> console.log(data)}>
+//       add todo
+//     </Button>
+//     <Button className="" onClick={()=> setModal(false)}>
+//       cancel
+//     </Button>
+//     </div>
+//   </div>
+// )}
+// </Form>
