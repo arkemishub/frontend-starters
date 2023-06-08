@@ -4,8 +4,8 @@ import { GetServerSideProps } from "next";
 import { Input, Button } from "@arkejs/ui";
 import { useState } from "react";
 
-import AllTodo from "./components/ui/AllTodo";
-import TodoInput from "./components/ui/TodoInput";
+import AllTodo from "../components/ui/AllTodo";
+import TodoInput from "../components/ui/TodoInput";
 import { Client, TUnit } from "@arkejs/client";
 
 export default function Home({ todos }: { todos: TUnit[] }) {
@@ -16,13 +16,18 @@ export default function Home({ todos }: { todos: TUnit[] }) {
       <div className="relative p-12 h-screen">
         <header className="flex justify-between items-center space-x-2 py-8 border-b border-black">
           <h1 className="text-2xl font-semibold">ARKE todo</h1>
-          <Button className="btn--secondary" onClick={()=> setIsModalVisible(true)}>Add todo</Button>
+          <Button
+            className="btn--secondary"
+            onClick={() => setIsModalVisible(true)}
+          >
+            Add todo
+          </Button>
         </header>
         <main className="py-8">
-          <AllTodo todos={todos}/>
+          <AllTodo todos={todos} />
         </main>
       </div>
-      {isModalVisible && <TodoInput setModal={setIsModalVisible}/>}
+      {isModalVisible && <TodoInput onSetModal={setIsModalVisible} />}
     </>
   );
 }
