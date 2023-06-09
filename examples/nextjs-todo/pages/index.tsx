@@ -8,6 +8,7 @@ import { useState } from "react";
 import AllTodo from "../components/ui/AllTodo";
 import TodoInput from "../components/ui/TodoInput";
 import { Client, TUnit } from "@arkejs/client";
+import ArkeTodoTitle from "@/components/ui/ArkeTodoTitle";
 
 export default function Home({ todos }: { todos: TUnit[] }) {
   const [modal, setModal] = useState({ isOpen: false, id: null });
@@ -19,12 +20,7 @@ export default function Home({ todos }: { todos: TUnit[] }) {
     <>
       <div className="relative p-12 h-screen">
         <header className="flex justify-between items-center space-x-2 pb-4 ">
-          <div className="flex items-center space-x-3">
-            <div className="w-6 h-6 border-y-[3px] border-black flex justify-center items-center">
-              <div className="w-1.5 h-1.5 bg-black rounded-full" />
-            </div>
-            <h1 className="text-3xl font-bold">ARKE todo</h1>
-          </div>
+          <ArkeTodoTitle />
           <Button
             className="btn--secondary"
             onClick={() => setModal({ ...modal, isOpen: true })}
