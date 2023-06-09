@@ -2,26 +2,30 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+.arke__table {
+  @apply w-full gap-2 border-separate border-spacing-y-2
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+.arke__table tr > td:first-child {
+  @apply rounded-l-theme
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+.arke__table tr > td:last-child {
+  @apply rounded-r-theme
+}
+
+.arke__table th svg {
+  display: inline-block;
+}
+
+.arke__table th, .arke__table td {
+  @apply p-2 text-left text-sm
+}
+
+.arke__table td {
+  @apply bg-background-300
+}
+
+.arke__table .arke__table__actions button {
+  @apply btn p-2 rounded-full inline-block
 }

@@ -1,14 +1,35 @@
 import Image from "next/image";
 import { GetServerSideProps } from "next";
 import { withAuth } from "@/server/withAuth";
+import { Input } from "@arkejs/ui";
+import { useState } from "react";
+import Link from "next/link";
 
 export default function Home() {
+  const [value, setValue] = useState("");
+
   return (
     <div className="min-h-screen max-w-5xl mx-auto flex flex-col justify-between items-center py-16 px-4">
       <Image src="/arke.svg" alt="Arke Logo" width={180} height={40} priority />
-      <h1 className="text-2xl font-bold text-center">
-        Make your Arke development journey begin.
-      </h1>
+      <div className="flex flex-col items-center gap-4">
+        <p className="text-center">
+          Start by creating your Arke on the console. <br />
+          You can then navigate to <code>{`/manage/<arke_id>`}</code> page and
+          see an example of CRUD.
+        </p>
+
+        <div className="flex gap-4">
+          <Input
+            value={value}
+            onChange={(e) => setValue(e.target.value)}
+            placeholder="Arke ID"
+          />
+          <Link className="btn btn--primary" href={`/manage/${value}`}>
+            Manage
+          </Link>
+        </div>
+      </div>
+
       <div className="grid lg:grid-cols-3 gap-4">
         <a
           className="mt-4 flex flex-col gap-2 border p-4 border-transparent rounded-theme transition-all hover:border-primary"

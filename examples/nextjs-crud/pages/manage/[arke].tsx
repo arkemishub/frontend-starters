@@ -95,7 +95,7 @@ export default function ManageArke(props: {
   );
 
   return (
-    <div className="p-8 px-16">
+    <div className="p-16 min-h-screen max-w-5xl mx-auto">
       <h1 className="mb-6 text-3xl font-bold">Manage {arkeInfo.label}</h1>
       <Button
         color="primary"
