@@ -19,7 +19,11 @@ export default function Todo({
   };
 
   return (
-    <div className="relative p-4 border border-black border-b-4 border-l-4 rounded-bl-xl rounded-br-lg rounded-tr-md rounded-tl-lg w-60 min-h-[250px] bg-white">
+    <div
+      className={`relative p-4 border border-black border-b-4 border-l-4 rounded-bl-xl rounded-br-lg rounded-tr-md rounded-tl-lg w-60 min-h-[250px] ${
+        done ? "bg-[#A8FBD7]" : "bg-white"
+      }`}
+    >
       {done ? (
         <del>
           <h1 className="text-2xl font-bold">{title}</h1>
