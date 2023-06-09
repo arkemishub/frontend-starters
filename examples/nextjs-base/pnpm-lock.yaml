@@ -9,8 +9,8 @@ dependencies:
     specifier: ^2.1.0
     version: 2.1.0
   '@arkejs/ui':
-    specifier: ^0.24.2
-    version: 0.24.2(monaco-editor@0.39.0)(react-dom@18.2.0)(react@18.2.0)(tailwindcss@3.3.2)
+    specifier: ^0.24.3
+    version: 0.24.3(monaco-editor@0.39.0)(react-dom@18.2.0)(react@18.2.0)(tailwindcss@3.3.2)
   '@types/node':
     specifier: 20.2.5
     version: 20.2.5
@@ -78,8 +78,8 @@ packages:
       - debug
     dev: false
 
-  /@arkejs/ui@0.24.2(monaco-editor@0.39.0)(react-dom@18.2.0)(react@18.2.0)(tailwindcss@3.3.2):
-    resolution: {integrity: sha512-7UHd+4RkIrQXbzfitDtl2HNBAwyDzCPx/q4KE+91RZ3bJKkOrMD7kh30r4O8CqqBEmM3N2N0hW5ebN2uwJK/nA==}
+  /@arkejs/ui@0.24.3(monaco-editor@0.39.0)(react-dom@18.2.0)(react@18.2.0)(tailwindcss@3.3.2):
+    resolution: {integrity: sha512-Q8eg5ytT7YP+9FZ4drCNdR2VA3vanxsF6cPyQOyhNc5uSaYB2HH5pgpt0WMWxXX1DL//y4cgrRFRmP5nTqEGQA==}
     peerDependencies:
       react: ^18.2.0
       react-dom: ^18.2.0
