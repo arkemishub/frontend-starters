@@ -8,7 +8,6 @@ export default function Todo({
   done,
   onRefreshPage,
   onSetModal,
-  onModal,
 }) {
   const client = useClient();
 

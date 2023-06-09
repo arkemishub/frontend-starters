@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { BaseParameter, TBaseParameter, TStruct, TUnit } from "@arkejs/client";
-import { FormConfigProvider, Form, FormField } from "@arkejs/form";
+import { TBaseParameter, TUnit } from "@arkejs/client";
+import { Form, FormField } from "@arkejs/form";
 import useClient from "@/arke/useClient";
 import { Button, Input } from "@arkejs/ui";
 
@@ -13,7 +13,6 @@ export interface CrudState {
 
 export default function TodoInput({ onSetModal, onModal, onRefreshPage }: any) {
   const [fields, setFields] = useState<TBaseParameter[]>();
-  const [editObj, setEditObj] = useState<TUnit>();
 
   const client = useClient();
 
@@ -26,12 +25,6 @@ export default function TodoInput({ onSetModal, onModal, onRefreshPage }: any) {
       client.arke
         .struct("todo")
         .then((res) => setFields(res.data.content.parameters));
-
-      if (onModal.id) {
-        client.unit
-          .get("todo", onModal.id)
-          .then((res) => setEditObj(res.data.content));
-      }
     }
   }, []);
 

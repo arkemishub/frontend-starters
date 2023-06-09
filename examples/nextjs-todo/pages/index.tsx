@@ -2,7 +2,7 @@ import { withAuth } from "@/server/withAuth";
 import { getClient } from "@/arke/getClient";
 import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
-import { Input, Button } from "@arkejs/ui";
+import { Button } from "@arkejs/ui";
 import { useState } from "react";
 
 import AllTodo from "../components/ui/AllTodo";
