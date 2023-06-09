@@ -120,7 +120,7 @@ export default function TodoInput({ onSetModal, onModal, onRefreshPage }: any) {
 
               <div className="flex space-x-2">
                 <Button className="btn--primary">
-                  {onModal.id ? "Edit Todo" : "Add Todo"}
+                  {onModal.id ? "Edit Todo" : "Create Todo"}
                 </Button>
                 <Button
                   onClick={(e) => {
