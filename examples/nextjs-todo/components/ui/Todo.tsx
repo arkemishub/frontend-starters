@@ -1,5 +1,8 @@
+import { useState, useEffect } from "react";
 import { Button } from "@arkejs/ui";
 import useClient from "@/arke/useClient";
+import { TBaseParameter, TUnit } from "@arkejs/client";
+import { Form, FormField } from "@arkejs/form";
 
 export default function Todo({
   title,
@@ -11,9 +14,24 @@ export default function Todo({
 }) {
   const client = useClient();
 
+  const [fields, setFields] = useState<TBaseParameter[]>();
+
+  useEffect(() => {
+    client.unit
+      .struct("todo", id)
+      .then((res) => setFields(res.data.content.parameters));
+  }, []);
+
   const handleDelete = async () => {
     client.unit
       .delete("todo", id)
+      .then((res) => onRefreshPage())
+      .catch((e) => console.log("something went wrong"));
+  };
+
+  const handleCheck = async (data: TUnit) => {
+    client.unit
+      .edit("todo", id, data)
       .then((res) => onRefreshPage())
       .catch((e) => console.log("something went wrong"));
   };
@@ -24,6 +42,37 @@ export default function Todo({
         done ? "bg-[#A8FBD7]" : "bg-white"
       }`}
     >
+      {fields && (
+        <Form
+          fields={fields}
+          onSubmit={(values) => handleCheck(values)}
+          components={{
+            string: (props) => <input {...props} type="text" />,
+          }}
+        >
+          {({ fields }) => (
+            <div>
+              <FormField
+                id="done"
+                render={(props) => (
+                  <Button
+                    {...props}
+                    onClick={(e) => {
+                      props.onChange(!props.value);
+                    }}
+                    className="absolute border border-black p-0 w-6 h-6 rounded-full -top-2 -right-2 bg-white"
+                  >
+                    {done ? (
+                      <div className="bg-black w-3 h-3 rounded-full" />
+                    ) : null}
+                  </Button>
+                )}
+              />
+            </div>
+          )}
+        </Form>
+      )}
+
       {done ? (
         <del>
           <h1 className="text-2xl font-bold">{title}</h1>

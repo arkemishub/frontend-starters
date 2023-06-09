@@ -14,7 +14,7 @@ export default function AllTodo({
 }) {
   return (
     <>
-      <ul className="flex space-x-4 overflow-y-auto pb-6 border-b-2 border-black">
+      <ul className="flex space-x-6 overflow-y-auto py-6 border-b-2 border-black">
         {todos
           .filter((item) => item.done === false)
           .map((item) => (
@@ -31,7 +31,7 @@ export default function AllTodo({
             </li>
           ))}
       </ul>
-      <ul className="flex space-x-4 overflow-y-auto py-3 mt-3">
+      <ul className="flex space-x-6 overflow-y-auto py-3 mt-3">
         {todos
           .filter((item) => item.done === true)
           .map((item) => (
