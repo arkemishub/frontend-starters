@@ -6,6 +6,7 @@ export default function Todo({
   title,
   description,
   id,
+  done,
   onRefreshPage,
   onSetModal,
   onModal,
@@ -20,9 +21,19 @@ export default function Todo({
   };
 
   return (
-    <div className="relative p-4 border border-black border-b-4 border-l-4 rounded-bl-xl rounded-br-lg rounded-tr-md rounded-tl-lg w-60 min-h-[250px]">
-      <h1 className="text-2xl font-bold">{title}</h1>
-      <p className="font-light mt-2">{description}</p>
+    <div className="relative p-4 border border-black border-b-4 border-l-4 rounded-bl-xl rounded-br-lg rounded-tr-md rounded-tl-lg w-60 min-h-[250px] bg-white">
+      {done ? (
+        <del>
+          <h1 className="text-2xl font-bold">{title}</h1>
+          <p className="font-light mt-2">{description}</p>
+        </del>
+      ) : (
+        <>
+          <h1 className="text-2xl font-bold">{title}</h1>
+          <p className="font-light mt-2">{description}</p>
+        </>
+      )}
+
       <div className="absolute flex bottom-2 right-0">
         <Button
           onClick={() => onSetModal({ isOpen: true, id: id })}

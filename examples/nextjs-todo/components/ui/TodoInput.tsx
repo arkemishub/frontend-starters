@@ -18,14 +18,20 @@ export default function TodoInput({ onSetModal, onModal, onRefreshPage }: any) {
   const client = useClient();
 
   useEffect(() => {
-    client.arke
-      .struct("todo")
-      .then((res) => setFields(res.data.content.parameters));
-
     if (onModal.id) {
       client.unit
-        .get("todo", onModal.id)
-        .then((res) => setEditObj(res.data.content));
+        .struct("todo", onModal.id)
+        .then((res) => setFields(res.data.content.parameters));
+    } else {
+      client.arke
+        .struct("todo")
+        .then((res) => setFields(res.data.content.parameters));
+
+      if (onModal.id) {
+        client.unit
+          .get("todo", onModal.id)
+          .then((res) => setEditObj(res.data.content));
+      }
     }
   }, []);
 
@@ -33,26 +39,34 @@ export default function TodoInput({ onSetModal, onModal, onRefreshPage }: any) {
     client.unit
       .create("todo", data)
       .then((res) => onRefreshPage())
-      .catch((e) => console.log("something went wrong"));
+      .catch((e) => console.log("something went wrong", e));
+
+    onSetModal(false);
+  };
+
+  const handleEdit = async (data: TUnit, id: string) => {
+    client.unit
+      .edit("todo", id, data)
+      .then((res) => onRefreshPage())
+      .catch((e) => console.log("something went wrong ", e));
 
     onSetModal(false);
   };
 
   return (
-    <div className="absolute top-0 h-screen w-screen bg-gray-300 opacity-90 flex justify-center items-center z-50">
+    <div className="absolute top-0 h-screen w-screen flex justify-center items-center z-50">
       {fields && (
         <Form
           fields={fields}
-          onSubmit={(values) => handleCreate(values)}
-          onChange={(values) => {
-            console.log(values);
-          }}
+          onSubmit={(values) =>
+            onModal.id ? handleEdit(values, onModal.id) : handleCreate(values)
+          }
           components={{
             string: (props) => <input {...props} type="text" />,
           }}
         >
           {({ fields }) => (
-            <div className="space-y-6 p-8 rounded-xl bg-white">
+            <div className="space-y-6 p-8 rounded-xl bg-white border-2 border-black">
               <FormField
                 id="title"
                 render={(props) => (
@@ -92,6 +106,7 @@ export default function TodoInput({ onSetModal, onModal, onRefreshPage }: any) {
           )}
         </Form>
       )}
+      <div className="absolute h-screen w-screen bg-white opacity-90 -z-10"></div>
     </div>
   );
 }
