@@ -19,7 +19,7 @@ export default function Home({ todos }: { todos: TUnit[] }) {
   return (
     <>
       <div className="relative p-12 h-screen">
-        <header className="flex justify-between items-center space-x-2 pb-4 ">
+        <header className="flex justify-between items-center space-x-2">
           <ArkeTodoTitle />
           <Button
             className="btn--secondary"
