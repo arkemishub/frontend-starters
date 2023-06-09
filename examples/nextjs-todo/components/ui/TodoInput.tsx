@@ -59,7 +59,7 @@ export default function TodoInput({ onSetModal, onModal, onRefreshPage }: any) {
           }}
         >
           {({ fields }) => (
-            <div className="space-y-6 p-8 rounded-xl bg-white border-2 border-black">
+            <div className="space-y-6 p-8 rounded-xl bg-white border-2 border-black rounded-bl-[40px] rounded-tr-[40px] border-b-8">
               <FormField
                 id="title"
                 render={(props) => (
@@ -78,7 +78,6 @@ export default function TodoInput({ onSetModal, onModal, onRefreshPage }: any) {
                     {...props}
                     className="w-full"
                     onChange={(e) => props.onChange(e.target.value)}
-                    required
                   />
                 )}
               />

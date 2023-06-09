@@ -19,7 +19,12 @@ export default function Home({ todos }: { todos: TUnit[] }) {
     <>
       <div className="relative p-12 h-screen">
         <header className="flex justify-between items-center space-x-2 pb-4 ">
-          <h1 className="text-3xl font-semibold">ARKE todo</h1>
+          <div className="flex items-center space-x-3">
+            <div className="w-6 h-6 border-y-[3px] border-black flex justify-center items-center">
+              <div className="w-1.5 h-1.5 bg-black rounded-full" />
+            </div>
+            <h1 className="text-3xl font-bold">ARKE todo</h1>
+          </div>
           <Button
             className="btn--secondary"
             onClick={() => setModal({ ...modal, isOpen: true })}
