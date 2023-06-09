@@ -39,7 +39,7 @@ export default function Todo({
   return (
     <div
       className={`relative p-4 border border-black border-b-4 border-l-4 rounded-bl-xl rounded-br-lg rounded-tr-md rounded-tl-lg w-60 min-h-[250px] ${
-        done ? "bg-[#A8FBD7]" : "bg-white"
+        done ? "bg-slate-200" : "bg-white"
       }`}
     >
       {fields && (
