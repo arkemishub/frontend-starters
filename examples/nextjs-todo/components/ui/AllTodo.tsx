@@ -20,6 +20,7 @@ export default function AllTodo({
             title={item.title}
             description={item.description}
             id={item.id}
+            done={item.done}
             onRefreshPage={onRefreshPage}
             onSetModal={onSetModal}
             onModal={onModal}

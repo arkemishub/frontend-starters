@@ -89,6 +89,43 @@ export default function TodoInput({ onSetModal, onModal, onRefreshPage }: any) {
                   />
                 )}
               />
+              {onModal.id && (
+                <FormField
+                  id="done"
+                  render={(props) => (
+                    <div className="flex items-center space-x-2">
+                      <Button
+                        className={
+                          "w-4 h-4 border-2 border-black rounded-none p-0"
+                        }
+                        onClick={(e) => {
+                          e.preventDefault();
+                          props.onChange(!props.value);
+                        }}
+                      >
+                        {props.value ? (
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            strokeWidth={4}
+                            stroke="currentColor"
+                            className="w-6 h-6"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              d="M4.5 12.75l6 6 9-13.5"
+                            />
+                          </svg>
+                        ) : null}
+                      </Button>
+                      <p>Done</p>
+                    </div>
+                  )}
+                />
+              )}
+
               <div className="flex space-x-2">
                 <Button className="btn--primary">
                   {onModal.id ? "Edit Todo" : "Add Todo"}

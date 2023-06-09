@@ -1,4 +1,3 @@
-import { TUnit } from "@arkejs/client";
 import { Button } from "@arkejs/ui";
 import useClient from "@/arke/useClient";
 
@@ -13,9 +12,9 @@ export default function Todo({
 }) {
   const client = useClient();
 
-  const handleDelete = async (itemId: string) => {
+  const handleDelete = async () => {
     client.unit
-      .delete("todo", itemId)
+      .delete("todo", id)
       .then((res) => onRefreshPage())
       .catch((e) => console.log("something went wrong"));
   };
@@ -54,7 +53,7 @@ export default function Todo({
             />
           </svg>
         </Button>
-        <Button onClick={() => handleDelete(id)} className="p-2">
+        <Button onClick={() => handleDelete()} className="p-2">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
