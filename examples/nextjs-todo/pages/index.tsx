@@ -2,6 +2,7 @@ import { withAuth } from "@/server/withAuth";
 import { getClient } from "@/arke/getClient";
 import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
+import useClient from "@/arke/useClient";
 import { Button } from "@arkejs/ui";
 import { useState, useEffect } from "react";
 
@@ -12,9 +13,21 @@ import ArkeTodoTitle from "@/components/ui/ArkeTodoTitle";
 
 export default function Home({ todos }: { todos: TUnit[] }) {
   const [modal, setModal] = useState({ isOpen: false, id: null });
-  const router = useRouter();
+  const [allTodos, setAllTodos] = useState(todos);
+  const [refresh, setRefresh] = useState(false);
 
-  const refreshData = () => router.replace(router.asPath);
+  const client = useClient();
+
+  const refreshData = () => setRefresh(!refresh);
+
+  useEffect(() => {
+    async function getTodosData() {
+      const response = await fetchAllTodos(client);
+      setAllTodos(response.data.content.items);
+    }
+
+    getTodosData();
+  }, [refresh, client]);
 
   return (
     <>
@@ -34,7 +47,7 @@ export default function Home({ todos }: { todos: TUnit[] }) {
               Todos
             </h1>
             <ul className="relative flex space-x-6 overflow-y-auto pt-6 pb-8 border-t-2 border-black">
-              {todos
+              {allTodos
                 .filter((item) => item.done === false)
                 .map((item) => (
                   <li key={item.id}>
@@ -56,7 +69,7 @@ export default function Home({ todos }: { todos: TUnit[] }) {
               Done
             </h1>
             <ul className="flex space-x-6 overflow-y-auto pt-6 mt-3 border-t-2 border-black">
-              {todos
+              {allTodos
                 .filter((item) => item.done === true)
                 .map((item) => (
                   <li key={item.id}>
