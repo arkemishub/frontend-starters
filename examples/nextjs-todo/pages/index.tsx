@@ -11,7 +11,7 @@ import Todo from "@/components/ui/Todo";
 import { Button } from "@arkejs/ui";
 import ArkeTodoTitle from "@/components/ui/ArkeTodoTitle";
 
-export default function Home({ todos }: { todos: TUnit[] }) {
+export default function ArkeTodo({ todos }: { todos: TUnit[] }) {
   const [modal, setModal] = useState({ isOpen: false, id: null });
   const [allTodos, setAllTodos] = useState(todos);
   const [refresh, setRefresh] = useState(false);
