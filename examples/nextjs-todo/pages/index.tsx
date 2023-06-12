@@ -12,9 +12,9 @@ import { Button } from "@arkejs/ui";
 import ArkeTodoTitle from "@/components/ui/ArkeTodoTitle";
 
 export default function ArkeTodo({ todos }: { todos: TUnit[] }) {
-  const [modal, setModal] = useState({ isOpen: false, id: null });
   const [allTodos, setAllTodos] = useState(todos);
   const [refresh, setRefresh] = useState(false);
+  const [modal, setModal] = useState({ isOpen: false, id: null });
 
   const client = useClient();
 
@@ -35,7 +35,7 @@ export default function ArkeTodo({ todos }: { todos: TUnit[] }) {
         <header className="flex justify-between items-center space-x-2">
           <ArkeTodoTitle />
           <Button
-            className="btn--secondary"
+            className="btn--secondary rounded-full"
             onClick={() => setModal({ ...modal, isOpen: true })}
           >
             Add todo
