@@ -1,14 +1,14 @@
-import { withAuth } from "@/server/withAuth";
-import { getClient } from "@/arke/getClient";
-import { GetServerSideProps } from "next";
-import { useRouter } from "next/router";
-import useClient from "@/arke/useClient";
-import { Button } from "@arkejs/ui";
 import { useState, useEffect } from "react";
+import { withAuth } from "@/server/withAuth";
+import { GetServerSideProps } from "next";
+
+import { getClient } from "@/arke/getClient";
+import useClient from "@/arke/useClient";
+import { Client, TUnit } from "@arkejs/client";
 
 import TodoInput from "../components/ui/TodoInput";
 import Todo from "@/components/ui/Todo";
-import { Client, TUnit } from "@arkejs/client";
+import { Button } from "@arkejs/ui";
 import ArkeTodoTitle from "@/components/ui/ArkeTodoTitle";
 
 export default function Home({ todos }: { todos: TUnit[] }) {
