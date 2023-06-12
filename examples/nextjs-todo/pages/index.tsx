@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { withAuth } from "@/server/withAuth";
 import { GetServerSideProps } from "next";
 
@@ -13,21 +13,14 @@ import ArkeTodoTitle from "@/components/ui/ArkeTodoTitle";
 
 export default function ArkeTodo({ todos }: { todos: TUnit[] }) {
   const [allTodos, setAllTodos] = useState(todos);
-  const [refresh, setRefresh] = useState(false);
   const [modal, setModal] = useState({ isOpen: false, id: null });
 
   const client = useClient();
 
-  const refreshData = () => setRefresh(!refresh);
-
-  useEffect(() => {
-    async function getTodosData() {
-      const response = await fetchAllTodos(client);
-      setAllTodos(response.data.content.items);
-    }
-
-    getTodosData();
-  }, [refresh, client]);
+  async function getTodosData() {
+    const response = await fetchAllTodos(client);
+    setAllTodos(response.data.content.items);
+  }
 
   return (
     <>
@@ -56,7 +49,7 @@ export default function ArkeTodo({ todos }: { todos: TUnit[] }) {
                       description={item.description}
                       id={item.id}
                       done={item.done}
-                      onRefreshPage={refreshData}
+                      onRefreshPage={getTodosData}
                       onSetModal={setModal}
                       onModal={modal}
                     />
@@ -78,7 +71,7 @@ export default function ArkeTodo({ todos }: { todos: TUnit[] }) {
                       description={item.description}
                       id={item.id}
                       done={item.done}
-                      onRefreshPage={refreshData}
+                      onRefreshPage={getTodosData}
                       onSetModal={setModal}
                       onModal={modal}
                     />
@@ -92,7 +85,7 @@ export default function ArkeTodo({ todos }: { todos: TUnit[] }) {
         <TodoInput
           onSetModal={setModal}
           onModal={modal}
-          onRefreshPage={refreshData}
+          onRefreshPage={getTodosData}
         />
       )}
     </>
