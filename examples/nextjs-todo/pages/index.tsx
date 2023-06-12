@@ -5,8 +5,8 @@ import { useRouter } from "next/router";
 import { Button } from "@arkejs/ui";
 import { useState } from "react";
 
-import AllTodo from "../components/ui/AllTodo";
 import TodoInput from "../components/ui/TodoInput";
+import Todo from "@/components/ui/Todo";
 import { Client, TUnit } from "@arkejs/client";
 import ArkeTodoTitle from "@/components/ui/ArkeTodoTitle";
 
@@ -29,12 +29,50 @@ export default function Home({ todos }: { todos: TUnit[] }) {
           </Button>
         </header>
         <main className="py-8">
-          <AllTodo
-            todos={todos}
-            onRefreshPage={refreshData}
-            onSetModal={setModal}
-            onModal={modal}
-          />
+          <div className="relative pt-2">
+            <h1 className="absolute -top-1 px-4 bg-black text-white rounded-full z-50">
+              Todos
+            </h1>
+            <ul className="relative flex space-x-6 overflow-y-auto pt-6 pb-8 border-t-2 border-black">
+              {todos
+                .filter((item) => item.done === false)
+                .map((item) => (
+                  <li key={item.id}>
+                    <Todo
+                      title={item.title}
+                      description={item.description}
+                      id={item.id}
+                      done={item.done}
+                      onRefreshPage={refreshData}
+                      onSetModal={setModal}
+                      onModal={modal}
+                    />
+                  </li>
+                ))}
+            </ul>
+          </div>
+          <div className="relative pt-2">
+            <h1 className="absolute top-2 px-4 bg-black text-white rounded-full z-50">
+              Done
+            </h1>
+            <ul className="flex space-x-6 overflow-y-auto pt-6 mt-3 border-t-2 border-black">
+              {todos
+                .filter((item) => item.done === true)
+                .map((item) => (
+                  <li key={item.id}>
+                    <Todo
+                      title={item.title}
+                      description={item.description}
+                      id={item.id}
+                      done={item.done}
+                      onRefreshPage={refreshData}
+                      onSetModal={setModal}
+                      onModal={modal}
+                    />
+                  </li>
+                ))}
+            </ul>
+          </div>
         </main>
       </div>
       {modal.isOpen && (
