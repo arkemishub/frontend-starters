@@ -3,7 +3,7 @@ import { getClient } from "@/arke/getClient";
 import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
 import { Button } from "@arkejs/ui";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import TodoInput from "../components/ui/TodoInput";
 import Todo from "@/components/ui/Todo";

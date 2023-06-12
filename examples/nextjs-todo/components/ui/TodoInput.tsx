@@ -51,7 +51,7 @@ export default function TodoInput({ onSetModal, onModal, onRefreshPage }: any) {
       {fields && (
         <Form
           fields={fields}
-          onSubmit={(values) =>
+          onSubmit={(values: TUnit) =>
             onModal.id ? handleEdit(values, onModal.id) : handleCreate(values)
           }
           components={{
@@ -135,7 +135,7 @@ export default function TodoInput({ onSetModal, onModal, onRefreshPage }: any) {
           )}
         </Form>
       )}
-      <div className="absolute h-screen w-screen bg-white opacity-90 -z-10"></div>
+      <div className="absolute h-screen w-screen bg-white opacity-90 -z-10" />
     </div>
   );
 }
