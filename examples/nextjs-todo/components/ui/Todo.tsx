@@ -6,6 +6,15 @@ import { Form, FormField } from "@arkejs/form";
 
 import { Button } from "@arkejs/ui";
 
+interface ITodoProps {
+  title: string;
+  description: string;
+  id: string;
+  done: boolean;
+  onRefreshPage: () => void;
+  onSetModal: (arg: { isOpen: boolean; id: string }) => void;
+}
+
 export default function Todo({
   title,
   description,
@@ -13,7 +22,7 @@ export default function Todo({
   done,
   onRefreshPage,
   onSetModal,
-}) {
+}: ITodoProps) {
   const client = useClient();
 
   const [fields, setFields] = useState<TBaseParameter[]>();
