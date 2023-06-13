@@ -13,6 +13,7 @@ export interface CrudState {
 
 export default function TodoInput({ onSetModal, onModal, onRefreshPage }: any) {
   const [fields, setFields] = useState<TBaseParameter[]>();
+  const [disabledInput, setDisabledInput] = useState(false);
 
   const client = useClient();
 
@@ -68,6 +69,7 @@ export default function TodoInput({ onSetModal, onModal, onRefreshPage }: any) {
                     className="w-full"
                     onChange={(e) => props.onChange(e.target.value)}
                     required
+                    disabled={disabledInput}
                   />
                 )}
               />
@@ -78,6 +80,7 @@ export default function TodoInput({ onSetModal, onModal, onRefreshPage }: any) {
                     {...props}
                     className="w-full"
                     onChange={(e) => props.onChange(e.target.value)}
+                    disabled={disabledInput}
                   />
                 )}
               />
@@ -93,6 +96,7 @@ export default function TodoInput({ onSetModal, onModal, onRefreshPage }: any) {
                         onClick={(e) => {
                           e.preventDefault();
                           props.onChange(!props.value);
+                          setDisabledInput(!props.value);
                         }}
                       >
                         {props.value ? (
