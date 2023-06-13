@@ -60,7 +60,7 @@ export default function TodoInput({ onSetModal, onModal, onRefreshPage }: any) {
           }}
         >
           {({ fields }) => (
-            <div className="space-y-6 p-8 rounded-xl bg-white border-2 border-black rounded-bl-[40px] rounded-tr-[40px] border-b-8">
+            <div className="space-y-6 p-8 rounded-xl bg-white border-2 border-black rounded-bl-[30px] rounded-tr-[30px] border-b-4">
               <FormField
                 id="title"
                 render={(props) => (
