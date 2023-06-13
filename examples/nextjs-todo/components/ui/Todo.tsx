@@ -56,7 +56,7 @@ export default function Todo({
       {fields && (
         <Form
           fields={fields}
-          onSubmit={(values) => handleCheck(values)}
+          onSubmit={(values: TUnit) => handleCheck(values)}
           components={{
             string: (props) => <input {...props} type="text" />,
           }}
