@@ -11,8 +11,8 @@ interface ITodoProps {
   description: string;
   id: string;
   done: boolean;
-  onRefreshPage: () => void;
-  onSetModal: (arg: { isOpen: boolean; id: string }) => void;
+  getTodosData: () => void;
+  onClose: (arg: { isOpen: boolean; id: string }) => void;
 }
 
 export default function Todo({
@@ -20,8 +20,8 @@ export default function Todo({
   description,
   id,
   done,
-  onRefreshPage,
-  onSetModal,
+  getTodosData,
+  onClose,
 }: ITodoProps) {
   const client = useClient();
 
@@ -36,14 +36,14 @@ export default function Todo({
   const handleDelete = async () => {
     client.unit
       .delete("todo", id)
-      .then((res) => onRefreshPage())
+      .then((res) => console.log("done"))
       .catch((e) => console.log("something went wrong"));
   };
 
   const handleCheck = async (data: TUnit) => {
     client.unit
       .edit("todo", id, data)
-      .then((res) => onRefreshPage())
+      .then((res) => getTodosData())
       .catch((e) => console.log("something went wrong"));
   };
 
@@ -98,7 +98,7 @@ export default function Todo({
 
       <div className="absolute flex bottom-2 right-0">
         <Button
-          onClick={() => onSetModal({ isOpen: true, id: id })}
+          onClick={() => onClose({ isOpen: true, id: id })}
           className="p-2"
         >
           <svg

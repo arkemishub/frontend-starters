@@ -13,7 +13,7 @@ export interface CrudState {
   delete?: boolean | ID;
 }
 
-export default function TodoForm({ onSetModal, onModal, onRefreshPage }: any) {
+export default function TodoForm({ onClose, onModal, getTodosData }: any) {
   const [fields, setFields] = useState<TBaseParameter[]>();
   const [disabledInput, setDisabledInput] = useState(false);
 
@@ -34,26 +34,26 @@ export default function TodoForm({ onSetModal, onModal, onRefreshPage }: any) {
   const handleCreate = async (data: TUnit) => {
     client.unit
       .create("todo", data)
-      .then((res) => onRefreshPage())
+      .then((res) => getTodosData())
       .catch((e) => console.log("something went wrong", e));
 
-    onSetModal(false);
+    onClose(false);
   };
 
   const handleEdit = async (data: TUnit, id: string) => {
     client.unit
       .edit("todo", id, data)
-      .then((res) => onRefreshPage())
+      .then((res) => getTodosData())
       .catch((e) => console.log("something went wrong ", e));
 
-    onSetModal(false);
+    onClose(false);
   };
 
   return (
     <Dialog
       open={onModal.isOpen}
-      onClose={onSetModal}
-      className="rounded-xl rounded-bl-[30px] rounded-tr-[30px] border-b-4 w-80 h-80"
+      onClose={onClose}
+      className="rounded-xl rounded-bl-[30px] rounded-tr-[30px] border-b-4 w-80 h-fit"
     >
       {fields && (
         <Form
@@ -94,7 +94,7 @@ export default function TodoForm({ onSetModal, onModal, onRefreshPage }: any) {
                 <FormField
                   id="done"
                   render={(props) => (
-                    <div className="flex items-center space-x-2">
+                    <div className="flex items-center space-x-4">
                       <Button
                         className={
                           "w-4 h-4 border-2 border-black rounded-none p-0"
@@ -135,7 +135,7 @@ export default function TodoForm({ onSetModal, onModal, onRefreshPage }: any) {
                 <Button
                   onClick={(e) => {
                     e.preventDefault();
-                    onSetModal(false);
+                    onClose(false);
                   }}
                 >
                   Cancel
