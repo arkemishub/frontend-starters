@@ -4,6 +4,8 @@ import { Form, FormField } from "@arkejs/form";
 import useClient from "@/arke/useClient";
 import { Button, Input } from "@arkejs/ui";
 
+import { Dialog } from "@arkejs/ui";
+
 type ID = string;
 export interface CrudState {
   add?: boolean;
@@ -48,7 +50,11 @@ export default function TodoForm({ onSetModal, onModal, onRefreshPage }: any) {
   };
 
   return (
-    <div className="absolute top-0 h-screen w-screen flex justify-center items-center z-50">
+    <Dialog
+      open={onModal.isOpen}
+      onClose={onSetModal}
+      className="rounded-xl rounded-bl-[30px] rounded-tr-[30px] border-b-4 w-80 h-80"
+    >
       {fields && (
         <Form
           fields={fields}
@@ -60,7 +66,7 @@ export default function TodoForm({ onSetModal, onModal, onRefreshPage }: any) {
           }}
         >
           {({ fields }) => (
-            <div className="space-y-6 p-8 rounded-xl bg-white border-2 border-black rounded-bl-[30px] rounded-tr-[30px] border-b-4">
+            <div className="space-y-6">
               <FormField
                 id="title"
                 render={(props) => (
@@ -139,7 +145,6 @@ export default function TodoForm({ onSetModal, onModal, onRefreshPage }: any) {
           )}
         </Form>
       )}
-      <div className="absolute h-screen w-screen bg-white opacity-90 -z-10" />
-    </div>
+    </Dialog>
   );
 }

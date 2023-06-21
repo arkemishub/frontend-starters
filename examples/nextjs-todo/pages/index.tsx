@@ -6,7 +6,7 @@ import { getClient } from "@/arke/getClient";
 import useClient from "@/arke/useClient";
 import { Client, TUnit } from "@arkejs/client";
 
-import TodoInput from "../components/ui/TodoForm";
+import TodoForm from "../components/ui/TodoForm";
 import Todo from "@/components/ui/Todo";
 import { Button } from "@arkejs/ui";
 
@@ -94,7 +94,7 @@ export default function ArkeTodo({ todos }: { todos: TUnit[] }) {
         </main>
       </div>
       {modal.isOpen && (
-        <TodoInput
+        <TodoForm
           onSetModal={setModal}
           onModal={modal}
           onRefreshPage={getTodosData}
