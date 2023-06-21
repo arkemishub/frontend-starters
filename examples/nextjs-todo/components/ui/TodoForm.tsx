@@ -11,7 +11,7 @@ export interface CrudState {
   delete?: boolean | ID;
 }
 
-export default function TodoInput({ onSetModal, onModal, onRefreshPage }: any) {
+export default function TodoForm({ onSetModal, onModal, onRefreshPage }: any) {
   const [fields, setFields] = useState<TBaseParameter[]>();
   const [disabledInput, setDisabledInput] = useState(false);
 
