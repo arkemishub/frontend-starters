@@ -25,7 +25,7 @@ const ArkeTodoTitle = () => {
 
 export default function ArkeTodo({ todos }: { todos: TUnit[] }) {
   const [allTodos, setAllTodos] = useState(todos);
-  const [modal, onSubmit] = useState({ isOpen: false, id: null });
+  const [modal, onSetModal] = useState({ isOpen: false, id: null });
 
   const client = useClient();
 
@@ -34,6 +34,20 @@ export default function ArkeTodo({ todos }: { todos: TUnit[] }) {
     setAllTodos(response.data.content.items);
   }
 
+  const handleCreate = async (data: TUnit, getData: () => {}) => {
+    client.unit
+      .create("todo", data)
+      .then((res) => getTodosData())
+      .catch((e) => console.log("something went wrong", e));
+  };
+
+  const handleEdit = async (data: TUnit, id: string, getData: () => {}) => {
+    client.unit
+      .edit("todo", id, data)
+      .then((res) => getTodosData())
+      .catch((e) => console.log("something went wrong ", e));
+  };
+
   return (
     <>
       <div className="relative p-12 h-screen">
@@ -41,7 +55,7 @@ export default function ArkeTodo({ todos }: { todos: TUnit[] }) {
           <ArkeTodoTitle />
           <Button
             className="btn--secondary rounded-full"
-            onClick={() => onSubmit({ ...modal, isOpen: true })}
+            onClick={() => onSetModal({ ...modal, isOpen: true })}
           >
             Add todo
           </Button>
@@ -62,8 +76,8 @@ export default function ArkeTodo({ todos }: { todos: TUnit[] }) {
                       id={item.id}
                       done={item.done}
                       getTodosData={getTodosData}
-                      onClose={onSubmit}
-                      onModal={modal}
+                      onClose={onSetModal}
+                      onSubmit={modal}
                     />
                   </li>
                 ))}
@@ -84,8 +98,8 @@ export default function ArkeTodo({ todos }: { todos: TUnit[] }) {
                       id={item.id}
                       done={item.done}
                       getTodosData={getTodosData}
-                      onClose={onSubmit}
-                      onModal={modal}
+                      onClose={onSetModal}
+                      onSubmit={modal}
                     />
                   </li>
                 ))}
@@ -95,8 +109,8 @@ export default function ArkeTodo({ todos }: { todos: TUnit[] }) {
       </div>
       {modal.isOpen && (
         <TodoForm
-          onClose={onSubmit}
-          onModal={modal}
+          onClose={onSetModal}
+          onSubmit={modal}
           getTodosData={getTodosData}
         />
       )}

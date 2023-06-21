@@ -36,7 +36,7 @@ export default function Todo({
   const handleDelete = async () => {
     client.unit
       .delete("todo", id)
-      .then((res) => console.log("done"))
+      .then((res) => getTodosData())
       .catch((e) => console.log("something went wrong"));
   };
 

@@ -13,16 +13,16 @@ export interface CrudState {
   delete?: boolean | ID;
 }
 
-export default function TodoForm({ onClose, onModal, getTodosData }: any) {
+export default function TodoForm({ onClose, onSubmit, getTodosData }: any) {
   const [fields, setFields] = useState<TBaseParameter[]>();
   const [disabledInput, setDisabledInput] = useState(false);
 
   const client = useClient();
 
   useEffect(() => {
-    if (onModal.id) {
+    if (onSubmit.id) {
       client.unit
-        .struct("todo", onModal.id)
+        .struct("todo", onSubmit.id)
         .then((res) => setFields(res.data.content.parameters));
     } else {
       client.arke
@@ -46,12 +46,12 @@ export default function TodoForm({ onClose, onModal, getTodosData }: any) {
       .then((res) => getTodosData())
       .catch((e) => console.log("something went wrong ", e));
 
-    onClose(false);
+    onClose({ ...onSubmit, isOpen: false });
   };
 
   return (
     <Dialog
-      open={onModal.isOpen}
+      open={onSubmit.isOpen}
       onClose={onClose}
       className="rounded-xl rounded-bl-[30px] rounded-tr-[30px] border-b-4 w-80 h-fit"
     >
@@ -59,7 +59,7 @@ export default function TodoForm({ onClose, onModal, getTodosData }: any) {
         <Form
           fields={fields}
           onSubmit={(values: TUnit) =>
-            onModal.id ? handleEdit(values, onModal.id) : handleCreate(values)
+            onSubmit.id ? handleEdit(values, onSubmit.id) : handleCreate(values)
           }
           components={{
             string: (props) => <input {...props} type="text" />,
@@ -90,7 +90,7 @@ export default function TodoForm({ onClose, onModal, getTodosData }: any) {
                   />
                 )}
               />
-              {onModal.id && (
+              {onSubmit.id && (
                 <FormField
                   id="done"
                   render={(props) => (
@@ -130,7 +130,7 @@ export default function TodoForm({ onClose, onModal, getTodosData }: any) {
 
               <div className="flex space-x-2">
                 <Button className="btn--primary">
-                  {onModal.id ? "Edit Todo" : "Create Todo"}
+                  {onSubmit.id ? "Edit Todo" : "Create Todo"}
                 </Button>
                 <Button
                   onClick={(e) => {
