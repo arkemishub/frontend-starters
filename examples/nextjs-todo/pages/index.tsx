@@ -9,7 +9,19 @@ import { Client, TUnit } from "@arkejs/client";
 import TodoInput from "../components/ui/TodoInput";
 import Todo from "@/components/ui/Todo";
 import { Button } from "@arkejs/ui";
-import ArkeTodoTitle from "@/components/ui/ArkeTodoTitle";
+
+const ArkeTodoTitle = () => {
+  return (
+    <>
+      <div className="flex items-center space-x-3">
+        <div className="w-6 h-6 border-y-[3px] border-black flex justify-center items-center">
+          <div className="w-1.5 h-1.5 bg-black rounded-full" />
+        </div>
+        <h1 className="text-3xl font-bold">ARKE todo</h1>
+      </div>
+    </>
+  );
+};
 
 export default function ArkeTodo({ todos }: { todos: TUnit[] }) {
   const [allTodos, setAllTodos] = useState(todos);
