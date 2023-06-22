@@ -42,14 +42,14 @@ export default function Todo({
     client.unit
       .delete("todo", id)
       .then((res) => onSubmit())
-      .catch((e) => console.log("something went wrong"));
+      .catch((e) => console.log("something went wrong: ", e));
   };
 
   const handleCheck = async (data: TUnit) => {
     client.unit
       .edit("todo", id, data)
       .then((res) => onSubmit())
-      .catch((e) => console.log("something went wrong"));
+      .catch((e) => console.log("something went wrong: ", e));
   };
 
   return (

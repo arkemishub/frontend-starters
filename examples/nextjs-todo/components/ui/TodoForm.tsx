@@ -27,7 +27,6 @@ export default function TodoForm({
         .struct("todo")
         .then((res) => setFields(res.data.content.parameters));
     }
-    console.log(activeTodoId);
   }, []);
 
   const handleCreate = async (data: TUnit) => {
@@ -43,7 +42,7 @@ export default function TodoForm({
     client.unit
       .edit("todo", id, data)
       .then((res) => onSubmit())
-      .catch((e) => console.log("something went wrong ", e));
+      .catch((e) => console.log("something went wrong: ", e));
 
     onClose(false);
   };
