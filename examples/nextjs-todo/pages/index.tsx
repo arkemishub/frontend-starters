@@ -10,22 +10,12 @@ import TodoForm from "../components/ui/TodoForm";
 import Todo from "@/components/ui/Todo";
 import { Button } from "@arkejs/ui";
 
-const ArkeTodoTitle = () => {
-  return (
-    <>
-      <div className="flex items-center space-x-3">
-        <div className="w-6 h-6 border-y-[3px] border-black flex justify-center items-center">
-          <div className="w-1.5 h-1.5 bg-black rounded-full" />
-        </div>
-        <h1 className="text-3xl font-bold">ARKE todo</h1>
-      </div>
-    </>
-  );
-};
-
 export default function ArkeTodo({ todos }: { todos: TUnit[] }) {
   const [allTodos, setAllTodos] = useState(todos);
-  const [modal, onSetModal] = useState({ isOpen: false, id: null });
+  const [activeTodoId, setActiveTodoId] = useState<string | undefined>(
+    undefined
+  );
+  const [open, setOpen] = useState(false);
 
   const client = useClient();
 
@@ -34,28 +24,26 @@ export default function ArkeTodo({ todos }: { todos: TUnit[] }) {
     setAllTodos(response.data.content.items);
   }
 
-  const handleCreate = async (data: TUnit, getData: () => {}) => {
-    client.unit
-      .create("todo", data)
-      .then((res) => getTodosData())
-      .catch((e) => console.log("something went wrong", e));
-  };
-
-  const handleEdit = async (data: TUnit, id: string, getData: () => {}) => {
-    client.unit
-      .edit("todo", id, data)
-      .then((res) => getTodosData())
-      .catch((e) => console.log("something went wrong ", e));
-  };
+  function handleOpenModal() {
+    setOpen(true);
+    setActiveTodoId("");
+  }
 
   return (
     <>
       <div className="relative p-12 h-screen">
         <header className="flex justify-between items-center space-x-2">
-          <ArkeTodoTitle />
+          <>
+            <div className="flex items-center space-x-3">
+              <div className="w-6 h-6 border-y-[3px] border-black flex justify-center items-center">
+                <div className="w-1.5 h-1.5 bg-black rounded-full" />
+              </div>
+              <h1 className="text-3xl font-bold">ARKE todo</h1>
+            </div>
+          </>
           <Button
             className="btn--secondary rounded-full"
-            onClick={() => onSetModal({ ...modal, isOpen: true })}
+            onClick={() => handleOpenModal()}
           >
             Add todo
           </Button>
@@ -76,8 +64,10 @@ export default function ArkeTodo({ todos }: { todos: TUnit[] }) {
                       id={item.id}
                       done={item.done}
                       getTodosData={getTodosData}
-                      onClose={onSetModal}
-                      onSubmit={modal}
+                      onClose={setOpen}
+                      isOpen={open}
+                      activeTodoId={activeTodoId}
+                      setActiveTodoId={setActiveTodoId}
                     />
                   </li>
                 ))}
@@ -98,8 +88,10 @@ export default function ArkeTodo({ todos }: { todos: TUnit[] }) {
                       id={item.id}
                       done={item.done}
                       getTodosData={getTodosData}
-                      onClose={onSetModal}
-                      onSubmit={modal}
+                      onClose={setOpen}
+                      isOpen={open}
+                      setActiveTodoId={setActiveTodoId}
+                      activeTodoId={activeTodoId}
                     />
                   </li>
                 ))}
@@ -107,11 +99,13 @@ export default function ArkeTodo({ todos }: { todos: TUnit[] }) {
           </div>
         </main>
       </div>
-      {modal.isOpen && (
+      {open && (
         <TodoForm
-          onClose={onSetModal}
-          onSubmit={modal}
+          onClose={setOpen}
+          isOpen={open}
           getTodosData={getTodosData}
+          activeTodoId={activeTodoId}
+          setActiveTodoId={setActiveTodoId}
         />
       )}
     </>

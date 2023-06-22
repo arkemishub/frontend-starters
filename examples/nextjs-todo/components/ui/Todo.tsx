@@ -12,7 +12,9 @@ interface ITodoProps {
   id: string;
   done: boolean;
   getTodosData: () => void;
-  onClose: (arg: { isOpen: boolean; id: string }) => void;
+  onClose: (value: boolean) => void;
+  setActiveTodoId: (id: string) => {};
+  activeTodoId: string;
 }
 
 export default function Todo({
@@ -22,6 +24,7 @@ export default function Todo({
   done,
   getTodosData,
   onClose,
+  setActiveTodoId,
 }: ITodoProps) {
   const client = useClient();
 
@@ -70,6 +73,7 @@ export default function Todo({
                     {...props}
                     onClick={(e) => {
                       props.onChange(!props.value);
+                      onClose(false);
                     }}
                     className="absolute border border-black p-0 w-6 h-6 rounded-full -top-2 -right-2 bg-white"
                   >
@@ -98,7 +102,10 @@ export default function Todo({
 
       <div className="absolute flex bottom-2 right-0">
         <Button
-          onClick={() => onClose({ isOpen: true, id: id })}
+          onClick={() => {
+            setActiveTodoId(id);
+            onClose(true);
+          }}
           className="p-2"
         >
           <svg

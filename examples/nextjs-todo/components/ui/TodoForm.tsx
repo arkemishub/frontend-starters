@@ -13,22 +13,29 @@ export interface CrudState {
   delete?: boolean | ID;
 }
 
-export default function TodoForm({ onClose, onSubmit, getTodosData }: any) {
+export default function TodoForm({
+  onClose,
+  onSubmit,
+  getTodosData,
+  isOpen,
+  activeTodoId,
+}: any) {
   const [fields, setFields] = useState<TBaseParameter[]>();
   const [disabledInput, setDisabledInput] = useState(false);
 
   const client = useClient();
 
   useEffect(() => {
-    if (onSubmit.id) {
+    if (activeTodoId) {
       client.unit
-        .struct("todo", onSubmit.id)
+        .struct("todo", activeTodoId)
         .then((res) => setFields(res.data.content.parameters));
     } else {
       client.arke
         .struct("todo")
         .then((res) => setFields(res.data.content.parameters));
     }
+    console.log(activeTodoId);
   }, []);
 
   const handleCreate = async (data: TUnit) => {
@@ -46,20 +53,22 @@ export default function TodoForm({ onClose, onSubmit, getTodosData }: any) {
       .then((res) => getTodosData())
       .catch((e) => console.log("something went wrong ", e));
 
-    onClose({ ...onSubmit, isOpen: false });
+    onClose(false);
   };
 
   return (
     <Dialog
-      open={onSubmit.isOpen}
-      onClose={onClose}
+      open={!!isOpen}
+      onClose={() => onClose(false)}
       className="rounded-xl rounded-bl-[30px] rounded-tr-[30px] border-b-4 w-80 h-fit"
     >
       {fields && (
         <Form
           fields={fields}
           onSubmit={(values: TUnit) =>
-            onSubmit.id ? handleEdit(values, onSubmit.id) : handleCreate(values)
+            activeTodoId
+              ? handleEdit(values, activeTodoId)
+              : handleCreate(values)
           }
           components={{
             string: (props) => <input {...props} type="text" />,
@@ -90,7 +99,7 @@ export default function TodoForm({ onClose, onSubmit, getTodosData }: any) {
                   />
                 )}
               />
-              {onSubmit.id && (
+              {activeTodoId && (
                 <FormField
                   id="done"
                   render={(props) => (
@@ -130,7 +139,7 @@ export default function TodoForm({ onClose, onSubmit, getTodosData }: any) {
 
               <div className="flex space-x-2">
                 <Button className="btn--primary">
-                  {onSubmit.id ? "Edit Todo" : "Create Todo"}
+                  {activeTodoId ? "Edit Todo" : "Create Todo"}
                 </Button>
                 <Button
                   onClick={(e) => {
