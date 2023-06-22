@@ -29,6 +29,11 @@ export default function ArkeTodo({ todos }: { todos: TUnit[] }) {
     setActiveTodoId("");
   }
 
+  function handleSubmit() {
+    setActiveTodoId(undefined);
+    getTodosData();
+  }
+
   return (
     <>
       <div className="relative p-12 h-screen">
@@ -63,8 +68,8 @@ export default function ArkeTodo({ todos }: { todos: TUnit[] }) {
                       description={item.description}
                       id={item.id}
                       done={item.done}
-                      getTodosData={getTodosData}
                       onClose={setOpen}
+                      onSubmit={handleSubmit}
                       isOpen={open}
                       activeTodoId={activeTodoId}
                       setActiveTodoId={setActiveTodoId}
@@ -87,8 +92,8 @@ export default function ArkeTodo({ todos }: { todos: TUnit[] }) {
                       description={item.description}
                       id={item.id}
                       done={item.done}
-                      getTodosData={getTodosData}
                       onClose={setOpen}
+                      onSubmit={handleSubmit}
                       isOpen={open}
                       setActiveTodoId={setActiveTodoId}
                       activeTodoId={activeTodoId}
@@ -103,7 +108,7 @@ export default function ArkeTodo({ todos }: { todos: TUnit[] }) {
         <TodoForm
           onClose={setOpen}
           isOpen={open}
-          getTodosData={getTodosData}
+          onSubmit={handleSubmit}
           activeTodoId={activeTodoId}
           setActiveTodoId={setActiveTodoId}
         />

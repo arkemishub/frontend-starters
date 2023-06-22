@@ -11,7 +11,7 @@ interface ITodoProps {
   description: string;
   id: string;
   done: boolean;
-  getTodosData: () => void;
+  onSubmit: () => void;
   onClose: (value: boolean) => void;
   setActiveTodoId: (id: string) => {};
   activeTodoId: string;
@@ -22,7 +22,7 @@ export default function Todo({
   description,
   id,
   done,
-  getTodosData,
+  onSubmit,
   onClose,
   setActiveTodoId,
 }: ITodoProps) {
@@ -39,14 +39,14 @@ export default function Todo({
   const handleDelete = async () => {
     client.unit
       .delete("todo", id)
-      .then((res) => getTodosData())
+      .then((res) => onSubmit())
       .catch((e) => console.log("something went wrong"));
   };
 
   const handleCheck = async (data: TUnit) => {
     client.unit
       .edit("todo", id, data)
-      .then((res) => getTodosData())
+      .then((res) => onSubmit())
       .catch((e) => console.log("something went wrong"));
   };
 
@@ -73,7 +73,7 @@ export default function Todo({
                     {...props}
                     onClick={(e) => {
                       props.onChange(!props.value);
-                      onClose(false);
+                      onSubmit();
                     }}
                     className="absolute border border-black p-0 w-6 h-6 rounded-full -top-2 -right-2 bg-white"
                   >

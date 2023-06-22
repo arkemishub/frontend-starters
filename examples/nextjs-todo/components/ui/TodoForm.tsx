@@ -6,17 +6,9 @@ import { Button, Input } from "@arkejs/ui";
 
 import { Dialog } from "@arkejs/ui";
 
-type ID = string;
-export interface CrudState {
-  add?: boolean;
-  edit?: boolean | ID;
-  delete?: boolean | ID;
-}
-
 export default function TodoForm({
   onClose,
   onSubmit,
-  getTodosData,
   isOpen,
   activeTodoId,
 }: any) {
@@ -41,7 +33,7 @@ export default function TodoForm({
   const handleCreate = async (data: TUnit) => {
     client.unit
       .create("todo", data)
-      .then((res) => getTodosData())
+      .then((res) => onSubmit())
       .catch((e) => console.log("something went wrong", e));
 
     onClose(false);
@@ -50,7 +42,7 @@ export default function TodoForm({
   const handleEdit = async (data: TUnit, id: string) => {
     client.unit
       .edit("todo", id, data)
-      .then((res) => getTodosData())
+      .then((res) => onSubmit())
       .catch((e) => console.log("something went wrong ", e));
 
     onClose(false);
