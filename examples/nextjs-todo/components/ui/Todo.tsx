@@ -3,18 +3,20 @@ import { useState, useEffect } from "react";
 import useClient from "@/arke/useClient";
 import { TBaseParameter, TUnit } from "@arkejs/client";
 import { Form, FormField } from "@arkejs/form";
+import { Dispatch, SetStateAction } from "react";
 
 import { Button } from "@arkejs/ui";
 
 interface ITodoProps {
-  title: string;
-  description: string;
+  title: string | unknown;
+  description: string | unknown;
   id: string;
-  done: boolean;
+  done: boolean | unknown;
   onSubmit: () => void;
   onClose: (value: boolean) => void;
-  setActiveTodoId: (id: string) => {};
-  activeTodoId: string;
+  setActiveTodoId?: Dispatch<SetStateAction<string | undefined>>;
+  activeTodoId?: string;
+  isOpen?: boolean;
 }
 
 export default function Todo({
@@ -90,13 +92,21 @@ export default function Todo({
 
       {done ? (
         <del>
-          <h1 className="text-2xl font-bold">{title}</h1>
-          <p className="font-light mt-2">{description}</p>
+          <h1 className="text-2xl font-bold">
+            {typeof title === "string" && title}
+          </h1>
+          <p className="font-light mt-2">
+            {typeof description === "string" && description}
+          </p>
         </del>
       ) : (
         <>
-          <h1 className="text-2xl font-bold">{title}</h1>
-          <p className="font-light mt-2">{description}</p>
+          <h1 className="text-2xl font-bold">
+            {typeof title === "string" && title}
+          </h1>
+          <p className="font-light mt-2">
+            {typeof description === "string" && description}
+          </p>
         </>
       )}
 
