@@ -3,7 +3,7 @@ import type { AppProps } from "next/app";
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <main className="bg-background">
+    <main className="bg-background text-background-contrast">
       <Component {...pageProps} />
     </main>
   );

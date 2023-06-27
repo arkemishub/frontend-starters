@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.arke__table {
+  @apply w-full gap-2 border-separate border-spacing-y-2
+}
+
+.arke__table tr > td:first-child {
+  @apply rounded-l-theme
+}
+
+.arke__table tr > td:last-child {
+  @apply rounded-r-theme
+}
+
+.arke__table th svg {
+  display: inline-block;
+}
+
+.arke__table th, .arke__table td {
+  @apply p-2 text-left text-sm
+}
+
+.arke__table td {
+  @apply bg-background-300
+}
+
+.arke__table .arke__table__actions button {
+  @apply btn p-2 rounded-full inline-block
+}

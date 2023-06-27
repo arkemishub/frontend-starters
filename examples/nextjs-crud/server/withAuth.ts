@@ -23,6 +23,14 @@ export function withAuth<
         },
       };
 
+    if (!client.project && context.req.url !== "/get-started")
+      return {
+        redirect: {
+          destination: "/get-started",
+          permanent: false,
+        },
+      };
+
     return handler(context);
   };
 }

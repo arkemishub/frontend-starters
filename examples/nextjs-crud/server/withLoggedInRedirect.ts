@@ -1,8 +1,7 @@
-import { GetServerSidePropsContext, GetServerSidePropsResult } from "next";
-import { getToken } from "next-auth/jwt";
-import { getClient } from "@/arke/getClient";
+import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
+import { getSession } from 'next-auth/react';
 
-export function withAuth<
+export function withLoggedInRedirect<
   P extends { [key: string]: unknown } = { [key: string]: unknown }
 >(
   handler: (
@@ -12,13 +11,12 @@ export function withAuth<
   return async function nextGetServerSidePropsHandlerWrappedWithLoggedInRedirect(
     context: GetServerSidePropsContext
   ) {
-    const session = await getToken({ req: context?.req });
-    const client = getClient(context);
+    const session = await getSession(context);
 
-    if (!session)
+    if (session)
       return {
         redirect: {
-          destination: `/login`,
+          destination: `/`,
           permanent: false,
         },
       };
