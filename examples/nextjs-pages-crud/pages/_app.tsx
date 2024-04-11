@@ -1,6 +1,6 @@
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
-import { FormConfigProvider, RenderProps } from "@arkejs/form";
+import { FormConfigProvider } from "@arkejs/form";
 import { Input } from "@arkejs/ui";
 
 export default function App({ Component, pageProps }: AppProps) {
@@ -8,15 +8,15 @@ export default function App({ Component, pageProps }: AppProps) {
     <main className="bg-background text-background-contrast">
       <FormConfigProvider
         components={{
-          string: (props) => (
+          string: ({ field }) => (
             <Input
-              {...props}
+              {...field}
               type="text"
               fullWidth
-              onChange={(e) => props.onChange(e.target.value)}
+              onChange={(e) => field.onChange(e.target.value)}
             />
           ),
-          default: (props: RenderProps & { type: string }) => (
+          default: (props: any) => (
             <div className="text-red-500">
               Type &quot;{props.type}&quot; not found
             </div>

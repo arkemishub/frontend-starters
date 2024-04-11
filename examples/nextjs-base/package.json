@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@arkejs/client": "^2.9.1",
+    "@arkejs/client": "^2.9.5",
     "next": "14.0.4",
     "next-auth": "^4.24.5",
     "react": "^18",

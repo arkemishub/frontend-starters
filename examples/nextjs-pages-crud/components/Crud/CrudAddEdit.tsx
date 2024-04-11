@@ -1,6 +1,6 @@
 import React, { ReactNode, useEffect, useState } from "react";
 import useClient from "@/arke/useClient";
-import { Form, FormField } from "@arkejs/form";
+import { Field, Form, useForm } from "@arkejs/form";
 import useCrud from "@/hooks/useCrud";
 import { TResponse, TUnit } from "@arkejs/client";
 import { Button, Dialog, Spinner } from "@arkejs/ui";
@@ -16,7 +16,7 @@ export interface CrudProps {
 
 export default function CrudAddEdit(props: CrudProps) {
   const client = useClient();
-  const [fields, setFields] = useState([]);
+  const [fields, setFields] = useState<Field[]>([]);
   const [loading, setLoading] = useState(true);
   const { arke, open, title, id, onClose } = props;
   const { onSubmit } = useCrud(arke, id, props.onSubmit);
@@ -40,6 +40,7 @@ export default function CrudAddEdit(props: CrudProps) {
       // Fields
       promise
         .then((res) => {
+          console.log(res.data.content);
           setFields(res.data.content.parameters as any);
         })
         .finally(() => setLoading(false));
@@ -50,37 +51,35 @@ export default function CrudAddEdit(props: CrudProps) {
     <Dialog open={!!open} title={title} onClose={onClose}>
       {fields.length > 0 ? (
         <Form onSubmit={onSubmit} style={{ height: "100%" }} fields={fields}>
-          {({ fields }) =>
-            loading ? (
-              <div
-                className="flex items-center justify-center"
-                style={{ minHeight: 300 }}
-              >
-                <Spinner />
+          {loading ? (
+            <div
+              className="flex items-center justify-center"
+              style={{ minHeight: 300 }}
+            >
+              <Spinner />
+            </div>
+          ) : (
+            <>
+              <div className="grid gap-4">
+                {fields.map((field) => (
+                  <Form.Field key={field.id} id={field.id} />
+                ))}
               </div>
-            ) : (
-              <>
-                <div className="grid gap-4">
-                  {fields.map((field) => (
-                    <FormField key={field.id} id={field.id} />
-                  ))}
-                </div>
-                <div className="mt-4 flex justify-between gap-4">
-                  <Button
-                    disabled={loading}
-                    className="btn-outlined"
-                    color="primary"
-                    onClick={onClose}
-                  >
-                    Annulla
-                  </Button>
-                  <Button disabled={loading} color="primary" type="submit">
-                    Conferma
-                  </Button>
-                </div>
-              </>
-            )
-          }
+              <div className="mt-4 flex justify-between gap-4">
+                <Button
+                  disabled={loading}
+                  className="btn-outlined"
+                  color="primary"
+                  onClick={onClose}
+                >
+                  Annulla
+                </Button>
+                <Button disabled={loading} color="primary" type="submit">
+                  Conferma
+                </Button>
+              </div>
+            </>
+          )}
         </Form>
       ) : (
         <Spinner />

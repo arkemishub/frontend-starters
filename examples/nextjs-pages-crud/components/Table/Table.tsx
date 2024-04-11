@@ -2,17 +2,17 @@ import {
   Table as ArkeTable,
   ITableProps,
   IUseTableData,
-  Filter,
-  Sort,
+  TableFilter,
+  TableSort,
 } from "@arkejs/table";
 import Pagination from "./Pagination/Pagination";
 import Filters from "@/components/Table/Filters/Filters";
 
 function Table(
   props: Pick<ITableProps, "columns" | "data" | "actions" | "noResult"> &
-    Omit<IUseTableData<any, any>, "tableProps"> & {
-      onFiltersChange?: (filters: Filter[]) => void;
-      onSortChange?: (sort: Sort[]) => void;
+    Omit<IUseTableData<any, any, any>, "tableProps"> & {
+      onFiltersChange?: (filters: TableFilter[]) => void;
+      onSortChange?: (sort: TableSort[]) => void;
     }
 ) {
   return (

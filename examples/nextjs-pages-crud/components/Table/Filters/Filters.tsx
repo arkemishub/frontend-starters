@@ -1,4 +1,4 @@
-import { AllColumns, Filter, FilterOperator } from "@arkejs/table";
+import { AllColumns, TableFilter, FilterOperator } from "@arkejs/table";
 import { Button, Input, Popover, Select } from "@arkejs/ui";
 import { FunnelIcon, PlusIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useCallback, useMemo, useState } from "react";
@@ -9,8 +9,8 @@ function Filters({
   ...props
 }: {
   allColumns: AllColumns;
-  filters: Filter[];
-  onFiltersChange: (filters: Filter[]) => void;
+  filters: TableFilter[];
+  onFiltersChange: (filters: TableFilter[]) => void;
 }) {
   const filterableColumns = useMemo(
     () =>
@@ -23,21 +23,21 @@ function Filters({
 
   const initFilters = useMemo(
     () => ({
-      columnId: filterableColumns[0]?.id,
+      key: filterableColumns[0]?.id,
       operator: filterableColumns[0]?.availableFilterOperators?.[0],
       value: "",
     }),
     [filterableColumns]
   );
 
-  const [filters, setFilters] = useState<Partial<Filter>[]>(
+  const [filters, setFilters] = useState<Partial<TableFilter>[]>(
     props.filters.length > 0 ? props.filters : [initFilters]
   );
 
   const onColumnChange = useCallback(
-    (index: number, columnId: string) => {
+    (index: number, key: string) => {
       const newFilters = [...filters];
-      newFilters[index] = { ...newFilters[index], columnId };
+      newFilters[index] = { ...newFilters[index], key };
       setFilters(newFilters);
     },
     [filters]
@@ -85,18 +85,20 @@ function Filters({
                 </Button>
                 <Select
                   label="Colonna"
-                  value={filterableColumns.find((c) => c.id === f.columnId)}
+                  value={filterableColumns.find((c) => c.id === f.key)}
                   onChange={(val) => onColumnChange(index, val.id)}
                   values={filterableColumns}
-                  renderLabel={(val) => val.label}
+                  renderValue={(val) => val.label}
+                  renderOption={(val) => val.label}
                 />
                 <Select
                   value={f.operator}
                   label="Operatore"
                   onChange={(val) => onOperatorChange(index, val)}
-                  renderLabel={(c) => c}
+                  renderValue={(c) => c}
+                  renderOption={(c) => c}
                   values={
-                    filterableColumns.find((c) => c.id === f.columnId)
+                    filterableColumns.find((c) => c.id === f.key)
                       ?.availableFilterOperators
                   }
                 />
@@ -130,7 +132,7 @@ function Filters({
             <Button
               className="ml-auto"
               color="primary"
-              onClick={() => onFiltersChange(filters as Filter[])}
+              onClick={() => onFiltersChange(filters as TableFilter[])}
             >
               Applica
             </Button>

@@ -1,6 +1,6 @@
-import { Filter, Sort, useTable } from "@arkejs/table";
+import { TableFilter, TableSort, useTable } from "@arkejs/table";
 import useClient from "@/arke/useClient";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { Client, TStruct, TUnit } from "@arkejs/client";
 import { CrudAddEdit, CrudDelete } from "@/components/Crud";
 import { CrudState } from "@/types/crud";
@@ -19,20 +19,18 @@ const fetchUnits = async (
   client: Client,
   arke: string,
   page?: number,
-  filters?: Filter[],
-  sort?: Sort[]
+  filters?: TableFilter[],
+  sort?: TableSort[]
 ) => {
   return client.unit.getAll(arke, {
     params: {
       filter:
         filters && filters?.length > 0
-          ? `and(${filters.map(
-              (f) => `${f.operator}(${f.columnId},${f.value})`
-            )})`
+          ? `and(${filters.map((f) => `${f.operator}(${f.key},${f.value})`)})`
           : null,
       offset: (page ?? 0) * PAGE_SIZE,
       limit: PAGE_SIZE,
-      order: sort?.map((sort) => `${sort.columnId};${sort.type}`),
+      order: sort?.map((sort) => `${sort.key};${sort.type}`),
     },
   });
 };
@@ -83,7 +81,7 @@ export default function ManageArke(props: {
   );
 
   const loadData = useCallback(
-    (page?: number, filters?: Filter[], sort?: Sort[]) => {
+    (page?: number, filters?: TableFilter[], sort?: TableSort[]) => {
       setIsLoading(true);
       fetchUnits(client, arke, page, filters, sort).then((res) => {
         setIsLoading(false);
@@ -138,7 +136,7 @@ export default function ManageArke(props: {
               ],
             }}
             {...tableProps}
-            goToPage={(page) => {
+            goToPage={(page: number) => {
               goToPage(page);
               loadData(page);
             }}
@@ -159,7 +157,7 @@ export default function ManageArke(props: {
         title={
           <div className="flex items-center gap-4">Add {arkeInfo.label}</div>
         }
-        open={!!crud.add}
+        open={Boolean(crud.add)}
         arke={arke}
         onClose={() => setCrud((p) => ({ ...p, add: false }))}
         onSubmit={() => {
@@ -172,8 +170,9 @@ export default function ManageArke(props: {
         title={
           <div className="flex items-center gap-4">Edit {arkeInfo.label}</div>
         }
-        open={!!crud.edit}
+        open={Boolean(crud.edit)}
         arke={arke}
+        id={crud.edit as string}
         onClose={() => setCrud((p) => ({ ...p, edit: false }))}
         onSubmit={() => {
           loadData();
@@ -184,7 +183,7 @@ export default function ManageArke(props: {
       <CrudDelete
         arke={arke}
         title={`Delete ${arkeInfo.label}`}
-        open={crud.delete}
+        open={Boolean(crud.delete)}
         id={crud.delete as string}
         onClose={() => setCrud((p) => ({ ...p, delete: false }))}
         onSubmit={() => {
